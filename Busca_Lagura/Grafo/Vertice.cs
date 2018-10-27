@@ -1,4 +1,4 @@
-﻿namespace Busca_Lagura.Grafo
+﻿namespace Busca_Lagura
 {
 	public class Vertice
 	{

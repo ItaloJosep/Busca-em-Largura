@@ -1,8 +1,8 @@
-﻿namespace Busca_Lagura.Grafo
+﻿namespace Busca_Lagura
 {
 	public class Aresta
 	{
-		public int Destino { get; set; }
+		public string Destino { get; set; }
 		public Aresta Proxima { get; set; }
 	}
 }
