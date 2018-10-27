@@ -11,8 +11,8 @@ namespace Busca_Lagura
 			Console.WriteLine("A - Exibir grafo");
 			Console.WriteLine("B - Incluir cidade (vértice)");
 			Console.WriteLine("C - Conectar cidades");
-			Console.WriteLine("D - Remover vértice");
-			Console.WriteLine("E - Remover aresta");
+			Console.WriteLine("D - Remover cidade");
+			Console.WriteLine("E - Remover conexão");
 			Console.WriteLine("F - Reiniciar grafo");
 			Console.WriteLine("H - Busca em Largura");
 			Console.WriteLine("I - Sair");			
@@ -27,6 +27,7 @@ namespace Busca_Lagura
 
 			Grafo grafo = new Grafo();
 			char opcao;
+			string cidade, cidadeIn, cidadeFim;
 
 			do
 			{
@@ -46,16 +47,13 @@ namespace Busca_Lagura
 					case 'b':
 						Console.Clear();
 						Console.Write("Entre com o da cidade...: ");
-						string cidade = Console.ReadLine();
+						cidade = Console.ReadLine();
 
 						if (grafo.VerificarCidade(cidade))
-						{
 							Console.WriteLine("{0}, já se encontra no grafo! \nPor favor digite uma outr cidade.");
-						}
-						else
-						{
-							grafo.IncluirCidade(cidade);
-						}
+						
+						else						
+							grafo.IncluirCidade(cidade);						
 
 						Console.ReadKey();
 						break;
@@ -63,10 +61,10 @@ namespace Busca_Lagura
 					// CONECTAR CIDADES DO GRAFO
 					case 'c':
 						Console.Clear();
-						Console.Write("Digite o nome da cidade inicial: ");
-						string cidadeIn = Console.ReadLine();
-						Console.Write("Digite o nome da cidade final: ");
-						string cidadeFim = Console.ReadLine();
+						Console.Write("Digite o nome da cidade inicial...: ");
+						cidadeIn = Console.ReadLine();
+						Console.Write("Digite o nome da cidade final...: ");
+						cidadeFim = Console.ReadLine();
 
 						if (cidadeIn.Trim().ToLower().Equals(cidadeFim.Trim().ToLower()))
 							Console.WriteLine("As cidades devem ser diferentes.");
@@ -75,10 +73,12 @@ namespace Busca_Lagura
 						{
 							if (!grafo.VerificarCidade(cidadeIn) || !grafo.VerificarCidade(cidadeFim))
 								Console.WriteLine("A cidade {0} e/ou a cidade {1} não existem no grafo.", cidadeIn, cidadeFim);
+
 							else
 							{
 								if (grafo.VerificarConexao(cidadeIn, cidadeFim))
 									Console.WriteLine("A aresta entre o vértice {0} e o vértice {1} já existe no grafo.", cidadeIn, cidadeFim);
+
 								else
 									grafo.IncluirConexao(cidadeIn, cidadeFim);
 							}
@@ -87,16 +87,37 @@ namespace Busca_Lagura
 						Console.ReadKey();
 						break;
 
-					// REMOVER ARESTA DO GRAFO
+					// REMOVER CIDADE DO GRAFO
 					case 'd':
 						Console.Clear();
+						Console.Write("Digite o nome da cidade...: ");
+						cidade = Console.ReadLine();
+
+						if (!grafo.VerificarCidade(cidade))
+							Console.WriteLine("A cidade {0} não existe no grafo.", cidade);
+						else
+							grafo.RemoverCidade(cidade);
 
 						Console.ReadKey();
 						break;
 
-					// REMOVER VERTICE DO GRAFO
+					// REMOVER CONEXAO DAS CIDADES DO GRAFO
 					case 'e':
 						Console.Clear();
+						Console.Write("Digite o nome da cidade inicial...: ");
+						cidadeIn = Console.ReadLine();
+						Console.Write("Digite o nome da cidade final...: ");
+						cidadeFim = Console.ReadLine();
+
+						if (!grafo.VerificarCidade(cidadeIn) || !grafo.VerificarCidade(cidadeFim))
+							Console.WriteLine("A cidade {0} e/ou a cidade {1} não existem no grafo.", cidadeIn, cidadeFim);
+						else
+						{
+							if (!grafo.VerificarConexao(cidadeIn, cidadeFim))
+								Console.WriteLine("A conexão entre a cidade {0} e a cidade {1} não existe no grafo.", cidadeIn, cidadeFim);
+							else
+								grafo.RemoverConexao(cidadeIn, cidadeFim);
+						}
 
 						Console.ReadKey();
 						break;
@@ -104,6 +125,8 @@ namespace Busca_Lagura
 					// REINICIAR GRAFO
 					case 'f':
 						Console.Clear();
+
+						grafo.ReiniciarGrafo();
 
 						Console.ReadKey();
 						break;

@@ -108,10 +108,84 @@ namespace Busca_Lagura
 
 		}
 
+		public void RemoverCidade(string cidade)
+		{
+			Vertice vertice = Inicio, ant = null;
 
+			while (vertice != null)
+			{
+				if (VerificarConexao(cidade, vertice.Cidade))
+					RemoverConexao(cidade, vertice.Cidade);
 
+				vertice = vertice.Proximo;
+			}
 
+			vertice = Inicio;
 
+			while (!vertice.Cidade.Trim().ToLower().Equals(cidade.Trim().ToLower()))
+			{
+				ant = vertice;
+				vertice = vertice.Proximo;
+			}
 
+			QtdVertices--;
+
+			if (ant == null)
+				Inicio = Inicio.Proximo;
+			else
+				ant.Proximo = vertice.Proximo;
+		}
+
+		public void RemoverConexao(string cidadeIn, string cidadeFim)
+		{
+			Vertice vertice = Inicio;
+			Aresta aresta, ant;
+
+			while (!vertice.Cidade.Trim().ToLower().Equals(cidadeIn.Trim().ToLower()))
+				vertice = vertice.Proximo;
+
+			vertice.Grau--;
+
+			aresta = vertice.Adjacentes;
+			ant = null;
+
+			while (!aresta.Destino.Trim().ToLower().Equals(cidadeFim.Trim().ToLower()))
+			{
+				ant = aresta;
+				aresta = aresta.Proxima;
+			}
+
+			if (ant == null)
+				vertice.Adjacentes = aresta.Proxima;
+			else
+				ant.Proxima = aresta.Proxima;
+
+			vertice = Inicio;
+
+			while (vertice.Cidade.Trim().ToLower().Equals(cidadeFim.Trim().ToLower()))
+				vertice = vertice.Proximo;
+
+			vertice.Grau--;
+
+			aresta = vertice.Adjacentes;
+			ant = null;
+
+			while (aresta.Destino.Trim().ToLower().Equals(cidadeIn.Trim().ToLower()))
+			{
+				ant = aresta;
+				aresta = aresta.Proxima;
+			}
+
+			if (ant == null)
+				vertice.Adjacentes = aresta.Proxima;
+			else
+				ant.Proxima = aresta.Proxima;
+		}
+
+		public void ReiniciarGrafo()
+		{
+			Inicio = null;
+			QtdVertices = 0;
+		}
 	}
 }
