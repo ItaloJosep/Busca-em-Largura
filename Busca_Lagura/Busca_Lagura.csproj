@@ -42,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Grafo\Aresta.cs" />
+    <Compile Include="Grafo\Grafo.cs" />
+    <Compile Include="Grafo\Vertice.cs" />
+    <Compile Include="Fila\Elemento.cs" />
+    <Compile Include="Fila\Fila.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

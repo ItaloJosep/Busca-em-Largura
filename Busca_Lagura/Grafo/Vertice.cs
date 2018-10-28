@@ -1,8 +1,7 @@
 ﻿namespace Busca_Lagura
 {
 	public class Vertice
-	{
-		public int Id { get; set; }
+	{		
 		public string Cidade { get; set; }
 		public bool Status { get; set; }
 		public int Grau { get; set; }

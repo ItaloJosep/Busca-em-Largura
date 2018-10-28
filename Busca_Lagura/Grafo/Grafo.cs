@@ -9,12 +9,16 @@ namespace Busca_Lagura
 		public Vertice Inicio { get; set; }
 		public int QtdVertices { get; set; }
 
+		// CONSTRUTOR DA CLASSE GRAFO
 		public Grafo()
 		{
 			Inicio = null;
 			QtdVertices = 0;
 		}
 
+		/// <summary>
+		/// FUNÇÃO RESPONSAVEL EM EXIBIR O GRAFO NA TELA
+		/// </summary>
 		public void ExibirGrafo()
 		{
 			Vertice vertice = Inicio;
@@ -34,22 +38,31 @@ namespace Busca_Lagura
 					aresta = aresta.Proxima;
 				}
 
-				Console.WriteLine("====================================");
+				Console.WriteLine("\n========================================");
 				vertice = vertice.Proximo;
 			}
 		}
 
+		/// <summary>
+		/// FUNÇÃO PARA VERIFICAR SE A CIDADE JÁ SE ENCONTRA CADASTRADA
+		/// </summary>
+		/// <param name="cidade"></param>
+		/// <returns></returns>
 		public bool VerificarCidade(string cidade)
 		{
 			Vertice vertice = Inicio;
 
 			while ((vertice != null) 
-				&& (vertice.Cidade.Trim().ToLower().Equals(cidade.Trim().ToLower())))
+				&& !(vertice.Cidade.Trim().ToLower().Equals(cidade.Trim().ToLower())))
 				vertice = vertice.Proximo;
 
 			return (vertice != null);
 		}
 
+		/// <summary>
+		/// FUNÇÃO PARA INCLUIR UMA NOVA CIDADE NO GRAFO 
+		/// </summary>
+		/// <param name="cidade"></param>
 		public void IncluirCidade(string cidade)
 		{
 			Vertice novo = new Vertice();
@@ -61,6 +74,12 @@ namespace Busca_Lagura
 			QtdVertices++;
 		}
 
+		/// <summary>
+		/// FUNÇÃO PARA VERIFICA SE EXISTE CONEXÃO ENTRE DUAS CIDADES
+		/// </summary>
+		/// <param name="cidadeIn"></param>
+		/// <param name="cidadeFim"></param>
+		/// <returns></returns>
 		public bool VerificarConexao(string cidadeIn, string cidadeFim)
 		{
 			Vertice vertice = Inicio;
@@ -78,6 +97,11 @@ namespace Busca_Lagura
 			return (aresta != null);
 		}
 
+		/// <summary>
+		/// FUNÇÃO PARA INCLUI UMA CONEXAO ENTRE DOIS VERTICES EXISTENTES NO GRAFO
+		/// </summary>
+		/// <param name="cidadeIn"></param>
+		/// <param name="cidadeFim"></param>
 		public void IncluirConexao(string cidadeIn, string cidadeFim)
 		{
 			Vertice vertice = Inicio;
@@ -108,6 +132,10 @@ namespace Busca_Lagura
 
 		}
 
+		/// <summary>
+		/// FUNÇÃO PARA REMOVE UMA CIDADE DO GRAFO
+		/// </summary>
+		/// <param name="cidade"></param>
 		public void RemoverCidade(string cidade)
 		{
 			Vertice vertice = Inicio, ant = null;
@@ -136,6 +164,11 @@ namespace Busca_Lagura
 				ant.Proximo = vertice.Proximo;
 		}
 
+		/// <summary>
+		/// FUNÇÃO PARA REMOVE UMA CONEXAO ENTRE DOIS VERTICES DO GRAFO
+		/// </summary>
+		/// <param name="cidadeIn"></param>
+		/// <param name="cidadeFim"></param>
 		public void RemoverConexao(string cidadeIn, string cidadeFim)
 		{
 			Vertice vertice = Inicio;
@@ -160,9 +193,11 @@ namespace Busca_Lagura
 			else
 				ant.Proxima = aresta.Proxima;
 
+
+			/* segunda cidade */
 			vertice = Inicio;
 
-			while (vertice.Cidade.Trim().ToLower().Equals(cidadeFim.Trim().ToLower()))
+			while (!vertice.Cidade.Trim().ToLower().Equals(cidadeFim.Trim().ToLower()))
 				vertice = vertice.Proximo;
 
 			vertice.Grau--;
@@ -170,7 +205,7 @@ namespace Busca_Lagura
 			aresta = vertice.Adjacentes;
 			ant = null;
 
-			while (aresta.Destino.Trim().ToLower().Equals(cidadeIn.Trim().ToLower()))
+			while (!aresta.Destino.Trim().ToLower().Equals(cidadeIn.Trim().ToLower()))
 			{
 				ant = aresta;
 				aresta = aresta.Proxima;
@@ -179,13 +214,103 @@ namespace Busca_Lagura
 			if (ant == null)
 				vertice.Adjacentes = aresta.Proxima;
 			else
-				ant.Proxima = aresta.Proxima;
+				ant.Proxima = aresta.Proxima;		
+				
 		}
 
+		/// <summary>
+		/// FUNÇÃO PARA ZERA O GRAFO 
+		/// </summary>
 		public void ReiniciarGrafo()
 		{
 			Inicio = null;
 			QtdVertices = 0;
+		}
+
+		/// <summary>
+		/// REALIZA A BUSCA EM LARGURA NO GRAFO
+		/// </summary>
+		/// <param name="cidade"></param>
+		/// <returns></returns>
+		public bool BuscaLargura(string cidade)
+		{
+			DesmarcarVertices();
+			Fila fila = new Fila();
+
+			Vertice verticeInicial = Inicio;
+			verticeInicial.Status = true;
+			fila.ColocarFila(verticeInicial);
+
+			while (!fila.Vazio())
+			{
+				bool encontrou;
+				Vertice vertice = fila.BuscaPrimeiro();
+
+				while(vertice != null && vertice.Proximo != null)
+				{
+					Vertice aux = vertice.Proximo;
+					Aresta auxA = vertice.Adjacentes;
+
+					if (!aux.Status)
+					{
+						encontrou = ExplorarAresta(auxA, cidade);
+						if (encontrou)
+							return encontrou;
+											
+						aux.Status = true;
+						fila.ColocarFila(aux);
+
+					}
+					else
+					{
+						encontrou = ExplorarAresta(auxA, cidade);
+						if (encontrou)
+							return encontrou;
+					}
+
+					vertice = vertice.Proximo;
+				}
+				fila.RemoverFila();
+			}
+
+			return false;
+
+		}
+
+		/// <summary>
+		/// FUNÇÃO PARA DESMARCAR TODOS OS VERTICES DO GRAFO, PARA A BUSCA EM LARGURA
+		/// </summary>
+		public void DesmarcarVertices()
+		{
+			Vertice vertice = Inicio;
+
+			while (vertice != null)
+			{
+				vertice.Status = false;
+				vertice = vertice.Proximo;
+			}
+
+		}
+
+		/// <summary>
+		/// FUNÇÃO PARA EXPLORAR AS ARESTAS DE UM VERTICE
+		/// </summary>
+		/// <param name="aresta"></param>
+		/// <param name="cidade"></param>
+		/// <returns></returns>
+		public bool ExplorarAresta(Aresta aresta, string cidade)
+		{
+			while (aresta != null)
+			{
+				if (aresta.Destino.Trim().ToLower().Equals(cidade.Trim().ToLower()))
+				{
+					return true;
+				}
+
+				aresta = aresta.Proxima;
+			}
+
+			return false;
 		}
 	}
 }

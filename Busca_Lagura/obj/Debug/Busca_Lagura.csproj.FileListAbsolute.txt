@@ -1,0 +1,7 @@
+C:\Arquivos\Documentos da puc\4º - Algoritmos em grafos\Primeiro trabalho\Busca_Em_Largura\Busca_Lagura\Busca_Lagura\bin\Debug\Busca_Lagura.exe.config
+C:\Arquivos\Documentos da puc\4º - Algoritmos em grafos\Primeiro trabalho\Busca_Em_Largura\Busca_Lagura\Busca_Lagura\bin\Debug\Busca_Lagura.exe
+C:\Arquivos\Documentos da puc\4º - Algoritmos em grafos\Primeiro trabalho\Busca_Em_Largura\Busca_Lagura\Busca_Lagura\bin\Debug\Busca_Lagura.pdb
+C:\Arquivos\Documentos da puc\4º - Algoritmos em grafos\Primeiro trabalho\Busca_Em_Largura\Busca_Lagura\Busca_Lagura\obj\Debug\Busca_Lagura.csprojAssemblyReference.cache
+C:\Arquivos\Documentos da puc\4º - Algoritmos em grafos\Primeiro trabalho\Busca_Em_Largura\Busca_Lagura\Busca_Lagura\obj\Debug\Busca_Lagura.csproj.CoreCompileInputs.cache
+C:\Arquivos\Documentos da puc\4º - Algoritmos em grafos\Primeiro trabalho\Busca_Em_Largura\Busca_Lagura\Busca_Lagura\obj\Debug\Busca_Lagura.exe
+C:\Arquivos\Documentos da puc\4º - Algoritmos em grafos\Primeiro trabalho\Busca_Em_Largura\Busca_Lagura\Busca_Lagura\obj\Debug\Busca_Lagura.pdb

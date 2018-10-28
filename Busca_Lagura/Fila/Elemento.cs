@@ -1,6 +1,4 @@
-﻿using Busca_Lagura.Grafo;
-
-namespace Busca_Lagura.Lista
+﻿namespace Busca_Lagura
 {
 	public class Elemento
 	{

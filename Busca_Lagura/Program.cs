@@ -46,7 +46,7 @@ namespace Busca_Lagura
 					// INCLUIR CIDADE NO GRAFO
 					case 'b':
 						Console.Clear();
-						Console.Write("Entre com o da cidade...: ");
+						Console.Write("Entre com o nome da cidade...: ");
 						cidade = Console.ReadLine();
 
 						if (grafo.VerificarCidade(cidade))
@@ -132,8 +132,22 @@ namespace Busca_Lagura
 						break;
 
 					// BUSCA EM LARGURA
-					case 'H':
+					case 'h':
 						Console.Clear();
+						Console.Write("Digite o nome da cidade a ser buscada...:");
+						
+						if(grafo.BuscaLargura(Console.ReadLine()))
+							Console.WriteLine("Cidade existem no grafo.");
+
+						else
+							Console.WriteLine("Cidade não existe.");
+
+						Console.ReadKey();
+						break;
+
+					// SAIR
+					case 'I':
+						Console.Clear();						
 
 						Console.ReadKey();
 						break;
