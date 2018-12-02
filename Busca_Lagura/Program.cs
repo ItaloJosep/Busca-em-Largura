@@ -134,13 +134,16 @@ namespace Busca_Lagura
 					// BUSCA EM LARGURA
 					case 'h':
 						Console.Clear();
-						Console.Write("Digite o nome da cidade a ser buscada...:");
-						
-						if(grafo.BuscaLargura(Console.ReadLine()))
-							Console.WriteLine("Cidade existem no grafo.");
+
+						Console.Write("Digite o nome da cidade a ser buscada...: ");
+						string cidadeBusca = Console.ReadLine();
+						Console.Write("Digite a cidade de inicio...: ");
+
+						if(grafo.BuscaLargura(cidadeBusca, Console.ReadLine()))
+							Console.WriteLine("\nCidade existente no grafo.");
 
 						else
-							Console.WriteLine("Cidade não existe.");
+							Console.WriteLine("\nCidade não existe.");
 
 						Console.ReadKey();
 						break;

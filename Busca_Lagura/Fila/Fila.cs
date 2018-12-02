@@ -37,17 +37,21 @@
 		/// </summary>
 		/// <returns></returns>
 		public Vertice BuscaPrimeiro()
-		{	
-			if (Inicio != null)
-			{
-				Elemento retorno = Inicio;
-				Inicio = Inicio.Proximo;
+		{
+			//if (Inicio != null)
+			//{
+			//	Elemento retorno = Inicio;
+			//	Inicio = Inicio.Proximo;
 
-				if (Inicio == null)
-					Fim = null;
+			//	if (Inicio == null)
+			//		Fim = null;
 
-				return retorno.Vertice;
-			}
+			//	return retorno.Vertice;
+			//}
+
+			//return null;
+			if(Inicio != null)
+				return Inicio.Vertice;
 
 			return null;
 		}

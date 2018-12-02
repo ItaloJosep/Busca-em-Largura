@@ -232,48 +232,49 @@ namespace Busca_Lagura
 		/// </summary>
 		/// <param name="cidade"></param>
 		/// <returns></returns>
-		public bool BuscaLargura(string cidade)
+		public bool BuscaLargura(string cidade, string cidadeInicio)
 		{
 			DesmarcarVertices();
 			Fila fila = new Fila();
 
-			Vertice verticeInicial = Inicio;
-			verticeInicial.Status = true;
+			Vertice verticeInicial = BuscaCidade(cidadeInicio);			
 			fila.ColocarFila(verticeInicial);
+			bool encontrou = false;
 
 			while (!fila.Vazio())
-			{
-				bool encontrou;
-				Vertice vertice = fila.BuscaPrimeiro();
+			{							
+				Vertice aux = fila.BuscaPrimeiro();
+				Aresta auxA = aux.Adjacentes;
 
-				while(vertice != null && vertice.Proximo != null)
+
+				if (!aux.Status)
 				{
-					Vertice aux = vertice.Proximo;
-					Aresta auxA = vertice.Adjacentes;
+					Console.Write(aux.Cidade + ", ");
 
-					if (!aux.Status)
+					while (auxA != null)
 					{
-						encontrou = ExplorarAresta(auxA, cidade);
-						if (encontrou)
-							return encontrou;
-											
-						aux.Status = true;
-						fila.ColocarFila(aux);
+						if (aux.Cidade.Trim().ToLower().Equals(cidade.Trim().ToLower()))
+							encontrou = true;
+						fila.ColocarFila(BuscaCidade(auxA.Destino));
+						auxA = auxA.Proxima;
 
 					}
-					else
-					{
-						encontrou = ExplorarAresta(auxA, cidade);
-						if (encontrou)
-							return encontrou;
-					}
 
-					vertice = vertice.Proximo;
+					aux.Status = true;
+
 				}
+				else
+				{					
+					if (aux.Cidade.Trim().ToLower().Equals(cidade.Trim().ToLower()))
+						encontrou = true;
+					
+				}
+
 				fila.RemoverFila();
+				aux = fila.BuscaPrimeiro();
 			}
 
-			return false;
+			return encontrou;
 
 		}
 
@@ -301,7 +302,7 @@ namespace Busca_Lagura
 		public bool ExplorarAresta(Aresta aresta, string cidade)
 		{
 			while (aresta != null)
-			{
+			{		
 				if (aresta.Destino.Trim().ToLower().Equals(cidade.Trim().ToLower()))
 				{
 					return true;
@@ -311,6 +312,29 @@ namespace Busca_Lagura
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Busca vertice na lista de adjacência
+		/// </summary>
+		/// <param name="cidade"></param>
+		/// <returns></returns>
+		public Vertice BuscaCidade(string cidade)
+		{
+			Vertice aux = Inicio;
+
+			while (aux != null)
+			{
+				if (aux.Cidade == cidade)
+					break;
+
+				aux = aux.Proximo;
+			}
+
+			if (aux != null)
+				return aux;
+			else
+				return null;
 		}
 	}
 }
